@@ -4,7 +4,7 @@
     {
       id: 'programming',
       title: 'Programming & Development',
-      skills: ['Python', 'C++', 'JavaScript/TypeScript', 'SQL', 'MATLAB', 'R', 'Git', 'Linux/Unix']
+      skills: ['C++', 'Python', 'NumPy', 'Pandas', 'SciPy', 'MATLAB', 'R', 'SQL', 'Parallel Computing', 'Vectorization', 'JavaScript/TypeScript', 'Git', 'Linux/Unix']
     },
     {
       id: 'ml-ai',
@@ -14,17 +14,17 @@
     {
       id: 'finance',
       title: 'Quantitative Finance',
-      skills: ['Options Pricing', 'Portfolio Optimization', 'Risk Management', 'Time Series Analysis', 'Monte Carlo Methods', 'Backtesting']
+      skills: ['Black-Scholes Model', 'Options Pricing', 'Greeks (Delta, Gamma, Vega)', 'Statistical Arbitrage', 'Market Making', 'VaR & Risk Management', 'Portfolio Optimization', 'Fixed Income', 'Time Series Analysis', 'Monte Carlo Methods', 'Backtesting Frameworks', 'Low-Latency Programming', 'Memory Optimization']
     },
     {
       id: 'mathematics',
       title: 'Mathematical Methods',
-      skills: ['Stochastic Calculus', 'Linear Algebra', 'Statistics & Probability', 'Optimization Theory', 'Numerical Analysis']
+      skills: ['Stochastic Calculus', 'Martingale Theory', 'Ito Calculus', 'Linear Algebra', 'Statistics & Probability', 'Optimization Theory', 'Numerical Analysis', 'Differential Equations']
     },
     {
       id: 'tools',
       title: 'Tools & Platforms',
-      skills: ['AWS', 'PostgreSQL', 'Jupyter', 'LaTeX', 'Tableau', 'Bloomberg Terminal']
+      skills: ['Bloomberg Terminal', 'Refinitiv Eikon', 'AWS', 'Zipline', 'QuantLib', 'KDB+/Q', 'PostgreSQL', 'Redis', 'FIX Protocol', 'Jupyter', 'LaTeX', 'Git', 'Docker']
     }
   ];
 

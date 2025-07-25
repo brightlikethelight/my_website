@@ -5,34 +5,31 @@
       id: 'harvard-kaggle-2025',
       place: '1st',
       title: '2025 Harvard Advanced Data Science Kaggle Competition',
-      description: 'Implemented ensemble deep learning model for financial time series prediction, achieving 0.937 AUC',
+      description: 'Applied machine learning techniques to financial data analysis problems',
       date: '2025',
-      participants: 'Top 1 out of 150+ teams',
+      participants: 'Top placement',
       category: 'Data Science',
-      medal: '🥇',
-      details: 'Private leaderboard score: 0.937, 4% improvement over 2nd place'
+      medal: '🥇'
     },
     {
       id: 'mit-quantum-2025',
       place: '1st', 
       title: '2025 MIT Quantum Hackathon (iQuHACK)',
-      description: 'Simulated superconducting cat qubit dynamics using GPU-accelerated dynamiqs software at both effective Hamiltonian and hardware levels. Explored circuit-level quantum error correction with cat qubits to reduce hardware overhead and increase robustness against quantum errors.',
+      description: 'Developed quantum computing solutions focusing on scalability and error correction',
       date: '2025',
-      participants: 'Top 1 out of 200+ participants',
+      participants: 'Top placement',
       category: 'Quantum Computing',
-      medal: '🥇',
-      details: 'Presented innovative quantum computing scalability solutions addressing hardware overhead reduction'
+      medal: '🥇'
     },
     {
       id: 'mit-puzzle-2023',
       place: '1st',
       title: '2023 MIT Mystery Puzzle Hunt',
-      description: 'Led team in solving cryptic puzzles combining math, CS, and lateral thinking',
+      description: 'Led team in solving complex puzzles combining mathematics, computer science, and logical reasoning',
       date: '2023',
       participants: 'Top 1 out of 400 teams',
       category: 'Problem Solving',
-      medal: '🥇',
-      details: 'Completed meta-puzzle in 48 hours, fastest solve time'
+      medal: '🥇'
     }
   ];
 
