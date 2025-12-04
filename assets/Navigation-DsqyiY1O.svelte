@@ -1,85 +1,73 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { activeSection } from './stores';
+  import { link, location } from 'svelte-spa-router';
   import ThemeToggle from './ThemeToggle.svelte';
 
   let isScrolled = false;
   let isMobileMenuOpen = false;
 
-  const sections = [
-    { id: 'home', label: 'Home' },
-    { id: 'education', label: 'Education' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'publications', label: 'Publications' },
-    { id: 'honors', label: 'Honors' },
-    { id: 'skills', label: 'Skills' }
+  const navLinks = [
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+    { path: '/projects', label: 'Projects' },
+    { path: '/writings', label: 'Writings' },
+    { path: '/quotes', label: 'Quotes' },
+    { path: '/teachings', label: 'Teachings' }
   ];
-
-  function scrollToSection(sectionId: string) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      isMobileMenuOpen = false;
-    }
-  }
 
   function handleScroll() {
     isScrolled = window.scrollY > 50;
-    
-    // Update active section
-    const scrollPosition = window.scrollY + 100;
-    for (const section of sections) {
-      const element = document.getElementById(section.id);
-      if (element) {
-        const { offsetTop, offsetHeight } = element;
-        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-          activeSection.set(section.id);
-          break;
-        }
-      }
-    }
+  }
+
+  function closeMobileMenu() {
+    isMobileMenuOpen = false;
   }
 
   onMount(() => {
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
+    handleScroll();
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   });
+
+  $: currentPath = $location;
 </script>
 
 <nav class="nav" class:scrolled={isScrolled} aria-label="Main navigation">
   <div class="nav-container">
     <div class="nav-brand">
-      <button 
-        on:click={() => scrollToSection('home')} 
+      <a 
+        href="/"
+        use:link
         class="brand-link"
-        aria-label="Go to home section"
+        aria-label="Go to home page"
+        on:click={closeMobileMenu}
       >
         Bright Liu
-      </button>
+      </a>
     </div>
     
     <div 
       class="nav-links" 
       class:mobile-open={isMobileMenuOpen}
       role="menubar"
-      aria-label="Portfolio sections"
+      aria-label="Site navigation"
     >
-      {#each sections.slice(1) as section}
-        <button 
+      {#each navLinks.slice(1) as navItem}
+        <a 
+          href={navItem.path}
+          use:link
           class="nav-link" 
-          class:active={$activeSection === section.id}
-          on:click={() => scrollToSection(section.id)}
+          class:active={currentPath === navItem.path}
           role="menuitem"
-          aria-label="Go to {section.label.toLowerCase()} section"
-          aria-current={$activeSection === section.id ? 'page' : undefined}
+          aria-label="Go to {navItem.label.toLowerCase()} page"
+          aria-current={currentPath === navItem.path ? 'page' : undefined}
+          on:click={closeMobileMenu}
         >
-          {section.label}
-        </button>
+          {navItem.label}
+        </a>
       {/each}
       
       <ThemeToggle />
@@ -106,25 +94,28 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  :global([data-theme="dark"]) .nav {
-    background: rgba(26, 26, 26, 0.8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--glass-bg);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all var(--transition-base);
   }
 
   .nav.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: var(--glass-bg);
+    box-shadow: var(--shadow-lg);
+    border-bottom: 1px solid transparent;
   }
 
-  :global([data-theme="dark"]) .nav.scrolled {
-    background: rgba(26, 26, 26, 0.95);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  .nav.scrolled::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--accent-gradient);
+    opacity: 0.2;
   }
 
   .nav-container {
@@ -141,14 +132,26 @@
     font-family: 'Inter', sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--text-primary);
-    background: none;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     border: none;
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: all var(--transition-base);
+    position: relative;
+  }
+
+  :global([data-theme="light"]) .nav-brand .brand-link {
+    -webkit-text-fill-color: var(--text-primary);
+    background: none;
   }
 
   .nav-brand .brand-link:hover {
+    transform: scale(1.05);
+  }
+
+  :global([data-theme="light"]) .nav-brand .brand-link:hover {
     color: var(--accent-primary);
   }
 
@@ -160,49 +163,72 @@
 
   .nav-link {
     font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
     color: var(--text-secondary);
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem 0;
+    padding: 0.5rem 0.75rem;
     position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-base);
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent-gradient-subtle);
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity var(--transition-base);
   }
   
   .nav-link::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 50%;
     right: 50%;
     height: 2px;
-    background: var(--accent-primary);
+    background: var(--accent-gradient);
     border-radius: 1px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-base);
     opacity: 0;
   }
 
   .nav-link:hover {
     color: var(--accent-primary);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+  }
+  
+  .nav-link:hover::before {
+    opacity: 1;
   }
   
   .nav-link:hover::after {
-    opacity: 0.5;
-    left: 20%;
-    right: 20%;
+    opacity: 0.7;
+    left: 25%;
+    right: 25%;
   }
 
   .nav-link.active {
     color: var(--accent-primary);
+    font-weight: 600;
+  }
+  
+  .nav-link.active::before {
+    opacity: 1;
   }
   
   .nav-link.active::after {
     opacity: 1;
-    left: 0;
-    right: 0;
+    left: 25%;
+    right: 25%;
   }
 
 
