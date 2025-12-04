@@ -231,15 +231,14 @@
     position: relative;
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 1.75rem;
+    border-radius: 12px;
+    padding: 1.5rem;
     margin-bottom: 1.5rem;
     cursor: pointer;
-    transition: all var(--transition-base);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
   }
   
   .project-card::before {
@@ -248,36 +247,22 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
+    height: 4px;
     background: var(--accent-gradient);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform var(--transition-slow);
-  }
-  
-  .project-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--accent-gradient-subtle);
-    opacity: 0;
-    transition: opacity var(--transition-base);
-    pointer-events: none;
+    transition: transform 0.3s ease;
   }
   
   .project-card:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: var(--shadow-xl);
-    border-color: var(--border-color-focus);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-primary);
     background: var(--bg-primary);
   }
   
   .project-card:hover::before {
     transform: scaleX(1);
-  }
-  
-  .project-card:hover::after {
-    opacity: 1;
   }
   
   .project-card:focus-visible {
@@ -287,9 +272,6 @@
   
   .project-card.featured {
     position: relative;
-    background: var(--glass-bg);
-    border: 2px solid transparent;
-    background-clip: padding-box;
   }
   
   .project-card.featured::before {
@@ -300,22 +282,14 @@
     right: -2px;
     bottom: -2px;
     background: var(--accent-gradient-warm);
-    border-radius: 18px;
+    border-radius: 14px;
     z-index: -1;
-    opacity: 0.6;
-    transition: all var(--transition-base);
-    animation: shimmer 3s ease-in-out infinite;
-  }
-  
-  @keyframes shimmer {
-    0%, 100% { opacity: 0.6; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.01); }
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
   }
   
   .project-card.featured:hover::before {
     opacity: 1;
-    animation: none;
-    transform: scale(1.02);
   }
   
   .project-card.expanded {
@@ -381,20 +355,13 @@
   }
   
   .status-badge {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 500;
     color: white;
-    padding: 0.375rem 0.875rem;
-    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-base);
-  }
-  
-  .project-card:hover .status-badge {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-md);
+    letter-spacing: 0.05em;
   }
   
   .expand-btn {
@@ -438,24 +405,21 @@
   }
   
   .tech-tag {
-    background: var(--accent-gradient-subtle);
-    color: var(--accent-primary);
-    padding: 0.375rem 0.875rem;
-    border-radius: 8px;
-    font-size: 0.775rem;
-    font-weight: 600;
-    border: 1px solid var(--border-color);
-    transition: all var(--transition-fast);
+    background: var(--accent-primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: none;
+    transition: all 0.2s ease;
     cursor: default;
-    letter-spacing: 0.02em;
   }
   
   .tech-tag:hover {
-    background: var(--accent-gradient);
-    color: white;
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: var(--shadow-md);
-    border-color: transparent;
+    background: var(--accent-secondary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .expanded-content {
@@ -485,17 +449,10 @@
   }
   
   .metric-item {
-    background: var(--accent-gradient-subtle);
-    padding: 1rem;
-    border-radius: 10px;
+    background: var(--bg-tertiary);
+    padding: 0.75rem;
+    border-radius: 6px;
     border: 1px solid var(--border-color);
-    transition: all var(--transition-base);
-  }
-  
-  .metric-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--accent-primary);
   }
   
   .metric-label {

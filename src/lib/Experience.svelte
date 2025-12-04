@@ -15,8 +15,8 @@
     </div>
     <div class="item-description">
       <ul>
-        <li>Engineered a cloud-based analytics package processing 300k+ infrastructure metrics with real-time tail risk threshold computations (tm99) and anomaly detection, applying statistical methods for latency shock diagnosis.</li>
-        <li>Developed automated analysis systems reducing manual investigation time from 5 hours to under 5 minutes, enabling real-time algorithmic calibration for high-frequency operations supporting 10k+ requests/week.</li>
+        <li>Engineered a MCP compatible analytics package on EC2/S3/Lambda that harnesses AWS Bedrock frontier LLMs to ingest 300k+ infrastructure metrics, compute tm99 tail risk thresholds, and diagnose latency shocks.</li>
+        <li>Developed a Lambda CLI that auto-generates root cause analysis, reducing manual investigation time from 5 hours to under 5 minutes, enabling real time algorithm calibration.</li>
       </ul>
     </div>
   </div>
@@ -32,8 +32,8 @@
     </div>
     <div class="item-description">
       <ul>
-        <li>Designed and implemented deep learning architectures in PyTorch for complex dependency modeling and risk prediction, applying advanced statistical methods to achieve 0.7 AUROC on large-scale datasets.</li>
-        <li>Engineered feature extraction systems for unstructured data processing, implementing dimensionality reduction and signal processing techniques that significantly improved downstream model performance.</li>
+        <li>Designed a Vision Transformer (ViT) in PyTorch to model complex dependencies in medical imaging data, achieving a 0.7 AUROC for long term lung cancer risk prediction.</li>
+        <li>Engineered a Retrieval-Augmented Generation (RAG) system to extract structured features from unstructured clinical notes, boosting downstream predictive model performance by 300%.</li>
       </ul>
     </div>
   </div>
@@ -49,7 +49,9 @@
     </div>
     <div class="item-description">
       <ul>
-        <li>Co-instructed graduate-level mathematical game theory and stochastic processes, developing multi-agent system models to analyze emergent behaviors and strategic interactions—core methodologies in algorithmic trading and market microstructure research.</li>
+        <li>Co-instructed graduate-level coursework in mathematical game theory and stochastic processes for 40+ PhD and Master's students, delivering lectures on Nash equilibria, evolutionary stability, and dynamics of strategic interactions.</li>
+        <li>Developed computational models to analyze multi-agent systems and emergent properties of competing strategies in language evolution, contributing to research on cooperation and competition in complex adaptive systems.</li>
+        <li>Mentored student research projects, graded advanced problem sets involving stochastic differential equations, and held weekly office hours to support student understanding of mathematical concepts and their applications.</li>
       </ul>
     </div>
   </div>
@@ -65,7 +67,9 @@
     </div>
     <div class="item-description">
       <ul>
-        <li>Developed statistical modeling pipelines for anomaly detection in high-dimensional, noisy datasets, applying signal processing and pattern recognition algorithms to identify rare events with high precision—methodologies directly applicable to market anomaly detection and alpha signal discovery.</li>
+        <li>Developed a statistical pipeline for analyzing Initial Mass Functions in early universe galaxies using JWST near-infrared photometry data, implementing Bayesian methods to handle noise and uncertainty in high-redshift observations.</li>
+        <li>Applied advanced signal processing techniques to identify 10+ potential ultra-high redshift galaxy candidates (z > 10), contributing to understanding of galaxy formation in the first billion years after the Big Bang.</li>
+        <li>Collaborated with international research team on data reduction protocols, calibration procedures, and statistical validation methods, presenting findings at weekly research seminars and contributing to observational proposals.</li>
       </ul>
     </div>
   </div>
