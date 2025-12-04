@@ -8,11 +8,11 @@
 
   const navLinks = [
     { path: '/', label: 'Home' },
-    { path: '/about', label: 'About' },
-    { path: '/projects', label: 'Projects' },
-    { path: '/writings', label: 'Writings' },
-    { path: '/quotes', label: 'Quotes' },
-    { path: '/teachings', label: 'Teachings' }
+    { path: '/#/about', label: 'About' },
+    { path: '/#/projects', label: 'Projects' },
+    { path: '/#/writings', label: 'Writings' },
+    { path: '/#/quotes', label: 'Quotes' },
+    { path: '/#/teachings', label: 'Teachings' }
   ];
 
   function handleScroll() {
