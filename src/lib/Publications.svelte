@@ -1,8 +1,6 @@
 <script lang="ts">
 
   // Academic work organized by category
-  const peerReviewedPublications = [];
-  
   const technicalReports = [
     {
       id: 'latent-diffusion-models',
@@ -90,25 +88,8 @@
     }
   ];
   
-  const teachingMaterials = [
-    {
-      id: 'linear-algebra-notes',
-      title: 'Advanced Linear Algebra: Teaching Notes and Examples',
-      authors: ['Bright Liu'],
-      date: '2024',
-      type: 'Teaching Material',
-      category: 'Mathematics Education',
-      abstract: 'Comprehensive teaching notes covering advanced topics in linear algebra including spectral theory, matrix decompositions, and applications to data science.',
-      keywords: ['Linear Algebra', 'Spectral Theory', 'Matrix Decompositions', 'Teaching'],
-      file: 'Advanced_Linear_Algebra_Teaching_Notes.pdf',
-      size: '287 KB',
-      pages: '33 pages',
-      featured: false
-    }
-  ];
-  
   // Combine all publications for display
-  const allPublications = [...peerReviewedPublications, ...technicalReports, ...teachingMaterials];
+  const allPublications = [...technicalReports];
 </script>
 
 <section class="section">
