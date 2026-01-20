@@ -105,7 +105,6 @@
 
   .section-placeholder {
     padding: 8rem 0;
-    animate-pulse: true;
   }
 
   .skeleton-header {

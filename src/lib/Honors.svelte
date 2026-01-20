@@ -44,14 +44,20 @@
   
   <div class="honors-grid">
     {#each honors as honor, index}
-      <div 
+      <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+      <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+      <div
         class="honor-card"
         class:hovered={hoveredHonor === honor.id}
         class:first-place={honor.place === '1st'}
         on:mouseenter={() => hoveredHonor = honor.id}
         on:mouseleave={() => hoveredHonor = null}
-        role="button"
+        on:focus={() => hoveredHonor = honor.id}
+        on:blur={() => hoveredHonor = null}
+        on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (hoveredHonor = hoveredHonor === honor.id ? null : honor.id)}
+        role="article"
         tabindex="0"
+        aria-label="Honor: {honor.title}"
       >
         <div class="honor-header">
           <div class="medal-section">

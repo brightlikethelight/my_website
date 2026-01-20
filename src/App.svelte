@@ -128,16 +128,19 @@
 
 <!-- Keyboard Help Overlay -->
 {#if showKeyboardHelp}
-  <div 
-    class="keyboard-help-overlay" 
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+  <div
+    class="keyboard-help-overlay"
     on:click={() => showKeyboardHelp = false}
     on:keydown={(e) => e.key === 'Escape' && (showKeyboardHelp = false)}
     role="dialog"
     aria-modal="true"
     aria-labelledby="keyboard-help-title"
+    tabindex="-1"
   >
-    <div 
-      class="keyboard-help-modal" 
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+    <div
+      class="keyboard-help-modal"
       on:click|stopPropagation
       on:keydown|stopPropagation
       role="document"
@@ -255,19 +258,6 @@
 
   main section:first-child {
     padding-top: 0;
-  }
-
-  /* Consistent section spacing for better visual hierarchy */
-  main section#publications {
-    padding: 6rem 0;
-  }
-  
-  main section#honors {
-    padding: 6rem 0;
-  }
-  
-  main section#skills {
-    padding: 6rem 0;
   }
 
   /* Typography */

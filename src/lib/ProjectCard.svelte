@@ -199,7 +199,7 @@
             {#each Object.entries(project.metrics) as [key, value]}
               <div class="metric-item">
                 <span class="metric-label">{key.replace(/([A-Z])/g, ' $1').trim()}:</span>
-                <span class="metric-value">{formatMetricValue(key, value)}</span>
+                <span class="metric-value">{formatMetricValue(key, value as string)}</span>
               </div>
             {/each}
           </div>

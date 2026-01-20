@@ -1,11 +1,26 @@
 <script lang="ts">
   import ProjectFilter from './ProjectFilter.svelte';
   import ProjectCard from './ProjectCard.svelte';
-  
-  let filteredProjects = [];
+
+  interface Project {
+    id: string;
+    title: string;
+    organization: string;
+    date: string;
+    status: 'active' | 'completed';
+    description: string;
+    technologies: string[];
+    impact: string;
+    metrics?: Record<string, string>;
+    category: string;
+    featured: boolean;
+    githubUrl?: string;
+  }
+
+  let filteredProjects: Project[] = [];
   let activeFilter = 'all';
-  
-  const projects = [
+
+  const projects: Project[] = [
     {
       id: 'iquhack-2025',
       title: 'Quantum Error Correction with Cat Qubits',
@@ -105,19 +120,20 @@
   // Initialize filtered projects
   filteredProjects = projects;
   
-  function handleFilter(event) {
+  function handleFilter(event: CustomEvent<string>) {
     const filter = event.detail;
     activeFilter = filter;
-    
+
     if (filter === 'all') {
       filteredProjects = projects;
     } else {
       filteredProjects = projects.filter(p => p.category === filter);
     }
   }
-  
-  function handleSearch(event) {
-    const searchTerm = event.target.value.toLowerCase();
+
+  function handleSearch(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const searchTerm = target.value.toLowerCase();
     
     let baseProjects = activeFilter === 'all' ? projects : projects.filter(p => p.category === activeFilter);
     

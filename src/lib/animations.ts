@@ -48,32 +48,33 @@ export function scrollAnimation(node: HTMLElement, params: {
 
   const observer = createScrollObserver((entries) => {
     entries.forEach((entry) => {
+      const target = entry.target as HTMLElement;
       if (entry.isIntersecting) {
         setTimeout(() => {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0) translateX(0) scale(1)';
+          target.style.opacity = '1';
+          target.style.transform = 'translateY(0) translateX(0) scale(1)';
         }, delay);
-        
+
         if (once) {
           observer?.unobserve(entry.target);
         }
       } else if (!once) {
-        entry.target.style.opacity = '0';
+        target.style.opacity = '0';
         switch (animation) {
           case 'slideUp':
-            entry.target.style.transform = 'translateY(30px)';
+            target.style.transform = 'translateY(30px)';
             break;
           case 'slideLeft':
-            entry.target.style.transform = 'translateX(-30px)';
+            target.style.transform = 'translateX(-30px)';
             break;
           case 'slideRight':
-            entry.target.style.transform = 'translateX(30px)';
+            target.style.transform = 'translateX(30px)';
             break;
           case 'scaleIn':
-            entry.target.style.transform = 'scale(0.95)';
+            target.style.transform = 'scale(0.95)';
             break;
           default:
-            entry.target.style.transform = 'translateY(20px)';
+            target.style.transform = 'translateY(20px)';
         }
       }
     });
