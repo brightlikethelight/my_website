@@ -10,6 +10,7 @@
     { path: '/experience', label: 'Experience' },
     { path: '/projects', label: 'Projects' },
     { path: '/publications', label: 'Publications' },
+    { path: '/writing', label: 'Writing' },
     { path: '/about', label: 'About' }
   ];
 

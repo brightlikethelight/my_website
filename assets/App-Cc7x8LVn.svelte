@@ -1,15 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { fade } from 'svelte/transition';
-  import { currentRoute } from './lib/router';
+  import { currentRoute, getWritingSlug } from './lib/router';
   import Navigation from './lib/Navigation.svelte';
   import Header from './lib/Header.svelte';
   import Education from './lib/Education.svelte';
   import Experience from './lib/Experience.svelte';
   import Projects from './lib/Projects.svelte';
   import Publications from './lib/Publications.svelte';
-  import Skills from './lib/Skills.svelte';
   import Honors from './lib/Honors.svelte';
+  import WritingList from './lib/WritingList.svelte';
+  import WritingPost from './lib/WritingPost.svelte';
   import { measureWebVitals } from './lib/utils/intersectionObserver';
   import analytics from './lib/utils/analytics';
 
@@ -39,10 +40,13 @@
         <section><Projects /></section>
       {:else if $currentRoute === '/publications'}
         <section><Publications /></section>
+      {:else if $currentRoute === '/writing'}
+        <section><WritingList /></section>
+      {:else if getWritingSlug($currentRoute)}
+        <section><WritingPost slug={getWritingSlug($currentRoute) || ''} /></section>
       {:else if $currentRoute === '/about'}
         <section><Education /></section>
         <section><Honors /></section>
-        <section><Skills /></section>
       {/if}
     </div>
   {/key}
