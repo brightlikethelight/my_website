@@ -60,7 +60,7 @@
 
 <style>
   .hero {
-    padding: 6rem 0;
+    padding: 5rem 0 3rem;
     text-align: center;
   }
 

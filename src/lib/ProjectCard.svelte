@@ -223,7 +223,6 @@
     </div>
   {/if}
   
-  <div class="card-glow"></div>
 </div>
 
 <style>
@@ -256,11 +255,10 @@
   
   .project-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     border-color: var(--accent-primary);
-    background: var(--bg-primary);
+    box-shadow: var(--shadow-md);
   }
-  
+
   .project-card:hover::before {
     transform: scaleX(1);
   }
@@ -272,24 +270,7 @@
   
   .project-card.featured {
     position: relative;
-  }
-  
-  .project-card.featured::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: var(--accent-gradient-warm);
-    border-radius: 14px;
-    z-index: -1;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-  
-  .project-card.featured:hover::before {
-    opacity: 1;
+    border-color: var(--accent-warm);
   }
   
   .project-card.expanded {
@@ -493,22 +474,6 @@
   .github-btn:hover {
     background: var(--accent-secondary);
     transform: translateY(-2px);
-  }
-  
-  .card-glow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(600px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 0, 0, 0.1), transparent 40%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-  
-  .project-card:hover .card-glow {
-    opacity: 1;
   }
   
   @media (max-width: 768px) {

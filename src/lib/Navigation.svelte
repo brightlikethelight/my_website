@@ -1,96 +1,73 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { activeSection } from './stores';
+  import { currentRoute, navigate } from './router';
   import ThemeToggle from './ThemeToggle.svelte';
 
   let isScrolled = false;
   let isMobileMenuOpen = false;
 
-  const sections = [
-    { id: 'home', label: 'Home' },
-    { id: 'education', label: 'Education' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'publications', label: 'Publications' },
-    { id: 'honors', label: 'Honors' },
-    { id: 'skills', label: 'Skills' }
+  const routes = [
+    { path: '/experience', label: 'Experience' },
+    { path: '/projects', label: 'Projects' },
+    { path: '/publications', label: 'Publications' },
+    { path: '/about', label: 'About' }
   ];
 
-  function scrollToSection(sectionId: string) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      isMobileMenuOpen = false;
-    }
+  function go(path: string) {
+    navigate(path);
+    isMobileMenuOpen = false;
   }
 
   function handleScroll() {
     isScrolled = window.scrollY > 50;
-    
-    // Update active section
-    const scrollPosition = window.scrollY + 100;
-    for (const section of sections) {
-      const element = document.getElementById(section.id);
-      if (element) {
-        const { offsetTop, offsetHeight } = element;
-        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-          activeSection.set(section.id);
-          break;
-        }
-      }
-    }
   }
 
   onMount(() => {
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
   });
 </script>
 
 <nav class="nav" class:scrolled={isScrolled} aria-label="Main navigation">
   <div class="nav-container">
     <div class="nav-brand">
-      <button 
-        on:click={() => scrollToSection('home')} 
+      <button
+        on:click={() => go('/')}
         class="brand-link"
-        aria-label="Go to home section"
+        aria-label="Go to home"
       >
         Bright Liu
       </button>
     </div>
-    
-    <div 
-      class="nav-links" 
+
+    <div
+      class="nav-links"
       class:mobile-open={isMobileMenuOpen}
       role="menubar"
-      aria-label="Portfolio sections"
+      aria-label="Site pages"
     >
-      {#each sections.slice(1) as section}
-        <button 
-          class="nav-link" 
-          class:active={$activeSection === section.id}
-          on:click={() => scrollToSection(section.id)}
+      {#each routes as route}
+        <button
+          class="nav-link"
+          class:active={$currentRoute === route.path}
+          on:click={() => go(route.path)}
           role="menuitem"
-          aria-label="Go to {section.label.toLowerCase()} section"
-          aria-current={$activeSection === section.id ? 'page' : undefined}
+          aria-label="Go to {route.label}"
+          aria-current={$currentRoute === route.path ? 'page' : undefined}
         >
-          {section.label}
+          {route.label}
         </button>
       {/each}
-      
+
       <ThemeToggle />
     </div>
-    
-    <button 
+
+    <button
       class="mobile-toggle"
-      on:click={() => isMobileMenuOpen = !isMobileMenuOpen}
+      on:click={() => (isMobileMenuOpen = !isMobileMenuOpen)}
       aria-label="Toggle mobile menu"
       aria-expanded={isMobileMenuOpen}
-      aria-controls="mobile-menu"
     >
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -170,7 +147,7 @@
     position: relative;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   .nav-link::after {
     content: '';
     position: absolute;
@@ -188,7 +165,7 @@
     color: var(--accent-primary);
     transform: translateY(-1px);
   }
-  
+
   .nav-link:hover::after {
     opacity: 0.5;
     left: 20%;
@@ -198,13 +175,12 @@
   .nav-link.active {
     color: var(--accent-primary);
   }
-  
+
   .nav-link.active::after {
     opacity: 1;
     left: 0;
     right: 0;
   }
-
 
   .mobile-toggle {
     display: none;

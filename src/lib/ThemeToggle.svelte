@@ -1,241 +1,165 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { writable } from 'svelte/store';
+  import { themeMode, setThemeMode } from './stores';
+  import analytics from './utils/analytics';
 
-  // Create a theme store with dark as default
-  export const theme = writable('dark');
-  
-  let currentTheme = 'dark';
-  let isToggling = false;
+  type Mode = 'light' | 'auto' | 'dark';
+  const modes: Mode[] = ['light', 'auto', 'dark'];
 
-  // Subscribe to theme changes
-  theme.subscribe(value => {
-    currentTheme = value;
-  });
+  let currentMode: Mode = 'auto';
+  themeMode.subscribe((v) => (currentMode = v));
 
-  onMount(() => {
-    // Check current theme from body element (our default is dark)
-    const currentBodyTheme = document.body.getAttribute('data-theme') || 'dark';
-    
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    
-    if (savedTheme) {
-      // Use saved preference
-      setTheme(savedTheme);
-    } else {
-      // Use current body theme as default (which is dark)
-      setTheme(currentBodyTheme);
-    }
-
-    // Listen for system theme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem('theme')) {
-        setTheme(e.matches ? 'dark' : 'light');
-      }
-    };
-
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
-    
-    return () => {
-      mediaQuery.removeEventListener('change', handleSystemThemeChange);
-    };
-  });
-
-  function setTheme(newTheme: string) {
-    currentTheme = newTheme;
-    theme.set(newTheme);
-    
-    // Apply theme to document body (matching our HTML)
-    document.body.setAttribute('data-theme', newTheme);
-    
-    // Save to localStorage
-    localStorage.setItem('theme', newTheme);
-    
-    // Track theme change
-    import('./utils/analytics').then(({ default: analytics }) => {
-      analytics.trackCustomEvent('theme_toggle', 0, { theme: newTheme });
-    });
+  function select(mode: Mode) {
+    setThemeMode(mode);
+    analytics.trackCustomEvent('theme_toggle', 0, { mode });
   }
 
-  function toggleTheme() {
-    if (isToggling) return;
-    
-    isToggling = true;
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    
-    // Add a slight delay for smooth animation
-    setTimeout(() => {
-      setTheme(newTheme);
-      isToggling = false;
-    }, 150);
-  }
-
-  function handleKeydown(event: KeyboardEvent) {
+  function handleKeydown(event: KeyboardEvent, mode: Mode) {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      toggleTheme();
+      select(mode);
     }
+  }
+
+  function activeIndex(mode: Mode): number {
+    return modes.indexOf(mode);
   }
 </script>
 
-<button
+<div
   class="theme-toggle"
-  class:toggling={isToggling}
-  on:click={toggleTheme}
-  on:keydown={handleKeydown}
-  aria-label="Toggle {currentTheme === 'light' ? 'dark' : 'light'} mode"
-  aria-pressed={currentTheme === 'dark'}
-  title="Toggle theme"
+  role="radiogroup"
+  aria-label="Theme mode"
 >
-  <div class="toggle-track">
-    <div class="toggle-thumb">
-      <div class="icon-container">
-        {#if currentTheme === 'light'}
-          <!-- Sun icon -->
-          <svg 
-            width="16" 
-            height="16" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            stroke-width="2.5"
-            class="theme-icon sun-icon"
-          >
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2"/>
-            <path d="M12 20v2"/>
-            <path d="M4.93 4.93l1.41 1.41"/>
-            <path d="M17.66 17.66l1.41 1.41"/>
-            <path d="M2 12h2"/>
-            <path d="M20 12h2"/>
-            <path d="M6.34 17.66l-1.41 1.41"/>
-            <path d="M19.07 4.93l-1.41 1.41"/>
-          </svg>
-        {:else}
-          <!-- Moon icon -->
-          <svg 
-            width="16" 
-            height="16" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            stroke-width="2.5"
-            class="theme-icon moon-icon"
-          >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        {/if}
-      </div>
-    </div>
-  </div>
-</button>
+  <!-- Sliding indicator -->
+  <div
+    class="indicator"
+    style="transform: translateX({activeIndex(currentMode) * 100}%)"
+  ></div>
+
+  <!-- Light -->
+  <button
+    class="segment"
+    class:active={currentMode === 'light'}
+    on:click={() => select('light')}
+    on:keydown={(e) => handleKeydown(e, 'light')}
+    role="radio"
+    aria-checked={currentMode === 'light'}
+    aria-label="Light mode"
+    title="Light"
+  >
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2"/>
+      <path d="M12 20v2"/>
+      <path d="M4.93 4.93l1.41 1.41"/>
+      <path d="M17.66 17.66l1.41 1.41"/>
+      <path d="M2 12h2"/>
+      <path d="M20 12h2"/>
+      <path d="M6.34 17.66l-1.41 1.41"/>
+      <path d="M19.07 4.93l-1.41 1.41"/>
+    </svg>
+  </button>
+
+  <!-- Auto -->
+  <button
+    class="segment"
+    class:active={currentMode === 'auto'}
+    on:click={() => select('auto')}
+    on:keydown={(e) => handleKeydown(e, 'auto')}
+    role="radio"
+    aria-checked={currentMode === 'auto'}
+    aria-label="Auto mode (follows time of day)"
+    title="Auto"
+  >
+    <span class="auto-label">Auto</span>
+  </button>
+
+  <!-- Dark -->
+  <button
+    class="segment"
+    class:active={currentMode === 'dark'}
+    on:click={() => select('dark')}
+    on:keydown={(e) => handleKeydown(e, 'dark')}
+    role="radio"
+    aria-checked={currentMode === 'dark'}
+    aria-label="Dark mode"
+    title="Dark"
+  >
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+</div>
 
 <style>
   .theme-toggle {
     position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2px;
+    width: 120px;
+    height: 28px;
+  }
+
+  .indicator {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(100% / 3 - 2px);
+    height: calc(100% - 4px);
+    background: var(--accent-primary);
+    border-radius: 6px;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+  }
+
+  .segment {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
-    outline: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    color: var(--text-tertiary);
+    transition: color 0.2s ease;
   }
 
-  .theme-toggle:focus-visible {
+  .segment.active {
+    color: white;
+  }
+
+  .segment:hover:not(.active) {
+    color: var(--text-primary);
+  }
+
+  .segment:focus-visible {
     outline: 2px solid var(--accent-primary);
     outline-offset: 2px;
-    border-radius: 50px;
+    border-radius: 6px;
   }
 
-  .theme-toggle:hover .toggle-track {
-    background: var(--accent-primary);
+  .auto-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
   }
 
-  .theme-toggle:hover .toggle-thumb {
-    transform: scale(1.1);
+  .segment svg {
+    display: block;
   }
 
-  .theme-toggle.toggling {
-    pointer-events: none;
-  }
-
-  .toggle-track {
-    width: 52px;
-    height: 28px;
-    background: var(--bg-tertiary);
-    border: 2px solid var(--border-color);
-    border-radius: 50px;
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .toggle-thumb {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 20px;
-    height: 20px;
-    background: var(--bg-primary);
-    border-radius: 50%;
-    box-shadow: var(--shadow-md);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  :global([data-theme="dark"]) .toggle-thumb {
-    transform: translateX(24px);
-    background: var(--bg-secondary);
-  }
-
-  .icon-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-  }
-
-  .theme-icon {
-    color: var(--text-primary);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .sun-icon {
-    color: #f59e0b;
-  }
-
-  .moon-icon {
-    color: #6366f1;
-  }
-
-  .theme-toggle.toggling .toggle-thumb {
-    transform: scale(0.9);
-  }
-
-  :global([data-theme="dark"]) .theme-toggle.toggling .toggle-thumb {
-    transform: translateX(24px) scale(0.9);
-  }
-
-  /* Smooth transitions for theme changes */
-  :global(*) {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  }
-
-  /* Respect reduced motion preferences */
   @media (prefers-reduced-motion: reduce) {
-    .theme-toggle,
-    .toggle-track,
-    .toggle-thumb,
-    .theme-icon {
+    .indicator {
       transition: none;
-    }
-    
-    :global(*) {
-      transition: none !important;
     }
   }
 </style>

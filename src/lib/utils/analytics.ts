@@ -293,7 +293,7 @@ class AnalyticsService {
   }
 
   public trackPageView(page: string): void {
-    this.trackEvent('page_view', 0, { page, url: window.location.href });
+    this.trackEvent('page_view', 0, { page, url: window.location.href, route: window.location.hash || '#/' });
   }
 
   public trackProjectView(projectId: string): void {

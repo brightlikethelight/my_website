@@ -89,7 +89,6 @@
           </div>
         </div>
         
-        <div class="honor-glow"></div>
       </div>
     {/each}
   </div>
@@ -128,9 +127,9 @@
   }
 
   .honor-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px -12px rgba(255, 215, 0, 0.3), var(--shadow-xl);
+    transform: translateY(-2px);
     border-color: #ffd700;
+    box-shadow: var(--shadow-md);
   }
   
   .honor-card.first-place {
@@ -242,23 +241,6 @@
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--text-primary);
-  }
-
-  .honor-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-  }
-
-  .honor-card.hovered .honor-glow {
-    opacity: 0.3;
   }
 
   @media (max-width: 768px) {
