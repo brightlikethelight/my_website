@@ -3,46 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
     <!-- Primary Meta Tags -->
     <title>Bright Liu - Harvard CS/Statistics Student & AWS ML Engineer</title>
     <meta name="title" content="Bright Liu - Harvard CS/Statistics Student & AWS ML Engineer" />
-    <meta name="description" content="Bright Liu - Harvard CS/Math/Statistics student. AI Safety researcher at Google DeepMind (Astra Fellow) and former AWS ML Engineer. Specializing in quantitative finance, deep learning, and high-performance computing." />
-    <meta name="keywords" content="Bright Liu, Harvard, Computer Science, Statistics, Machine Learning, AWS, Deep Learning, AI Safety, Google DeepMind, Quantitative Finance, Astra Fellow" />
+    <meta name="description" content="Personal portfolio of Bright Liu, Harvard University student studying Mathematics, Computer Science, and Statistics. AWS ML Engineer intern with experience in deep learning, astrophysics research, and AI safety." />
+    <meta name="keywords" content="Bright Liu, Harvard, Computer Science, Statistics, Machine Learning, AWS, Deep Learning, Astrophysics, AI Safety" />
     <meta name="author" content="Bright Liu" />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://brightliu.com" />
     <meta property="og:title" content="Bright Liu - Harvard CS/Statistics Student & AWS ML Engineer" />
     <meta property="og:description" content="Personal portfolio of Bright Liu, Harvard University student studying Mathematics, Computer Science, and Statistics. AWS ML Engineer intern with experience in deep learning, astrophysics research, and AI safety." />
     <meta property="og:image" content="https://brightliu.com/og-image.jpg" />
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://brightliu.com" />
     <meta property="twitter:title" content="Bright Liu - Harvard CS/Statistics Student & AWS ML Engineer" />
     <meta property="twitter:description" content="Personal portfolio of Bright Liu, Harvard University student studying Mathematics, Computer Science, and Statistics. AWS ML Engineer intern with experience in deep learning, astrophysics research, and AI safety." />
     <meta property="twitter:image" content="https://brightliu.com/og-image.jpg" />
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
+
     <!-- Fonts with preloading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
-    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+
     <!-- Preload critical resources -->
     <link rel="preload" href="data:video/mp2t;base64,aW1wb3J0IHsgbW91bnQgfSBmcm9tICdzdmVsdGUnCmltcG9ydCAnLi9hcHAuY3NzJwppbXBvcnQgQXBwIGZyb20gJy4vQXBwLnN2ZWx0ZScKCmNvbnN0IGFwcCA9IG1vdW50KEFwcCwgewogIHRhcmdldDogZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2FwcCcpISwKfSkKCmV4cG9ydCBkZWZhdWx0IGFwcAo=" as="script">
-    <link rel="preload" href="/assets/App-CORy3zvG.svelte" as="script">
-    <link rel="preload" href="/assets/Navigation-CrnX4xNc.svelte" as="script">
-    
+    <link rel="preload" href="/assets/App-L5jpMsJg.svelte" as="script">
+    <link rel="preload" href="/assets/Navigation-BSiFlOSK.svelte" as="script">
+
     <!-- Theme -->
     <meta name="theme-color" content="#1a1a1a" />
     <meta name="color-scheme" content="dark light" />
-    
+
+    <!-- Prevent theme flash: resolve theme before Svelte mounts -->
+    <script>
+      (function() {
+        var mode = localStorage.getItem('themeMode');
+        // Migrate old key
+        if (!mode) {
+          var old = localStorage.getItem('theme');
+          if (old === 'light' || old === 'dark') {
+            mode = old;
+            localStorage.setItem('themeMode', old);
+            localStorage.removeItem('theme');
+          }
+        }
+        var theme;
+        if (mode === 'light') theme = 'light';
+        else if (mode === 'dark') theme = 'dark';
+        else {
+          // auto: time-of-day based
+          var h = new Date().getHours();
+          theme = (h >= 6 && h < 18) ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -67,14 +92,11 @@
       "knowsAbout": [
         "Machine Learning",
         "Artificial Intelligence",
-        "AI Safety",
         "Quantitative Finance",
         "Deep Learning",
         "Python Programming",
         "Statistics",
-        "Mathematics",
-        "Options Pricing",
-        "Statistical Arbitrage"
+        "Mathematics"
       ],
       "hasOccupation": {
         "@type": "Occupation",
@@ -86,25 +108,22 @@
       }
     }
     </script>
-    
+
     <!-- Performance monitoring -->
     <script>
-      // Web Vitals measurement
       if ('PerformanceObserver' in window) {
-        // LCP measurement
-        const lcpObserver = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          const lastEntry = entries[entries.length - 1];
+        var lcpObserver = new PerformanceObserver(function(list) {
+          var entries = list.getEntries();
+          var lastEntry = entries[entries.length - 1];
           if (lastEntry && lastEntry.startTime) {
             console.log('LCP:', lastEntry.startTime);
           }
         });
         lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
-        
-        // CLS measurement
-        let cumulativeLayoutShift = 0;
-        const clsObserver = new PerformanceObserver((list) => {
-          list.getEntries().forEach((entry) => {
+
+        var cumulativeLayoutShift = 0;
+        var clsObserver = new PerformanceObserver(function(list) {
+          list.getEntries().forEach(function(entry) {
             if (!entry.hadRecentInput) {
               cumulativeLayoutShift += entry.value;
             }
@@ -114,9 +133,9 @@
         clsObserver.observe({ entryTypes: ['layout-shift'] });
       }
     </script>
-    <script type="module" crossorigin src="/assets/index-7B3s4I88.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/vendor-Jq1Fns1p.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-3Es81T3J.css">
+    <script type="module" crossorigin src="/assets/index-C6b4uZiH.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-wCrvXQV-.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-uqYLd4N6.css">
   </head>
   <body data-theme="dark">
     <div id="app"></div>
