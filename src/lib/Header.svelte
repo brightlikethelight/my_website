@@ -1,9 +1,9 @@
 <script lang="ts">
   import { slide } from 'svelte/transition';
   import ContactForm from './ContactForm.svelte';
-  
+
   let showContactForm = false;
-  
+
   function toggleContactForm() {
     showContactForm = !showContactForm;
   }
@@ -14,20 +14,21 @@
     <div class="hero-main">
       <div class="hero-text">
         <h1 class="hero-title">Bright Liu</h1>
-        
+
         <div class="hero-subtitle">
           <span class="education">Harvard University</span>
-          <span class="degree">Mathematics & Computer Science + Master of Science in Statistics</span>
+          <span class="degree">Mathematics & Computer Science + M.S. Statistics</span>
         </div>
-        
+
         <p class="hero-description">
-          Harvard Mathematics & Statistics student with AWS AI/ML engineering experience. <br/>
-          Specializing in quantitative finance, deep learning, and high-performance computing.
+          I'm a student at Harvard studying mathematics and statistics.
+          My research interests include deep learning, quantitative methods,
+          and high-performance computing.
         </p>
-        
+
         <div class="hero-links">
-          <button 
-            on:click={toggleContactForm} 
+          <button
+            on:click={toggleContactForm}
             class="contact-link"
             class:active={showContactForm}
             aria-label="Toggle contact form"
@@ -38,11 +39,11 @@
           <a href="https://github.com/brightlikethelight" target="_blank" rel="noopener" class="contact-link">GitHub</a>
         </div>
       </div>
-      
+
       <div class="hero-image">
-        <img 
-          src="/profile.jpg" 
-          alt="Bright Liu - Professional headshot" 
+        <img
+          src="/profile.jpg"
+          alt="Bright Liu"
           class="profile-photo"
         />
       </div>
@@ -50,13 +51,11 @@
   </div>
 </div>
 
-<!-- Dynamic sections -->
 {#if showContactForm}
   <div class="dynamic-section" transition:slide>
     <ContactForm />
   </div>
 {/if}
-
 
 <style>
   .hero {
@@ -83,31 +82,24 @@
   }
 
   .hero-image {
-    flex: 0 0 300px;
+    flex: 0 0 240px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .profile-photo {
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
+    width: 220px;
+    height: 220px;
+    border-radius: 12px;
     object-fit: cover;
     object-position: center 25%;
-    border: 4px solid var(--accent-primary);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .profile-photo:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-color);
   }
 
   .hero-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1.5rem;
     color: var(--text-primary);
@@ -117,86 +109,57 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
   }
 
   .education {
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    font-weight: 700;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 600;
     color: var(--accent-primary);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
   }
 
   .degree {
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
-    font-weight: 600;
-    color: var(--text-primary);
-    letter-spacing: -0.01em;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 500;
+    color: var(--text-secondary);
   }
 
   .hero-description {
-    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-size: 1.05rem;
     color: var(--text-secondary);
-    max-width: 600px;
-    margin: 0 0 3rem 0;
-    line-height: 1.6;
+    max-width: 540px;
+    margin: 0 0 2rem 0;
+    line-height: 1.7;
   }
 
   .hero-links {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     justify-content: flex-start;
-    margin-bottom: 2rem;
     align-items: center;
   }
 
   .contact-link {
-    padding: 0.75rem 1.5rem;
+    padding: 0.6rem 1.25rem;
     background: var(--bg-secondary);
     color: var(--text-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 6px;
     font-weight: 500;
     font-size: 0.9rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
+    transition: color 0.2s ease, border-color 0.2s ease;
     text-align: center;
-    min-width: 100px;
-  }
-  
-  .contact-link::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: var(--accent-primary);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s ease, height 0.6s ease;
-    z-index: -1;
+    cursor: pointer;
   }
 
   .contact-link:hover {
-    color: white;
+    color: var(--accent-primary);
     border-color: var(--accent-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-  
-  .contact-link:hover::before {
-    width: 300%;
-    height: 300%;
   }
 
   .contact-link.active {
-    background: var(--accent-primary);
-    color: white;
+    color: var(--accent-primary);
     border-color: var(--accent-primary);
   }
 
@@ -206,10 +169,9 @@
     padding: 0 2rem;
   }
 
-
   @media (max-width: 768px) {
     .hero {
-      padding: 4rem 1rem;
+      padding: 3rem 1rem;
     }
 
     .hero-main {
@@ -228,8 +190,8 @@
     }
 
     .profile-photo {
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
     }
 
     .hero-subtitle {
@@ -238,35 +200,28 @@
 
     .hero-description {
       text-align: center;
-      margin: 0 auto 3rem;
+      margin: 0 auto 2rem;
     }
 
     .hero-links {
-      flex-direction: column;
-      gap: 0.75rem;
-      align-items: center;
       justify-content: center;
-    }
-
-    .contact-link {
-      width: 100%;
-      max-width: 280px;
-      text-align: center;
     }
   }
 
   @media (max-width: 480px) {
     .profile-photo {
-      width: 160px;
-      height: 160px;
-    }
-
-    .hero-subtitle {
-      gap: 0.25rem;
+      width: 150px;
+      height: 150px;
     }
 
     .hero-links {
+      flex-direction: column;
       gap: 0.5rem;
+      align-items: stretch;
+    }
+
+    .contact-link {
+      text-align: center;
     }
   }
 </style>

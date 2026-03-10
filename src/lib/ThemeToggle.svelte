@@ -71,7 +71,10 @@
     aria-label="Auto mode (follows time of day)"
     title="Auto"
   >
-    <span class="auto-label">Auto</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M12 3a9 9 0 0 1 0 18V3z" fill="currentColor"/>
+    </svg>
   </button>
 
   <!-- Dark -->
@@ -144,13 +147,6 @@
     outline: 2px solid var(--accent-primary);
     outline-offset: 2px;
     border-radius: 6px;
-  }
-
-  .auto-label {
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
   }
 
   .segment svg {
