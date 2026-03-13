@@ -3,6 +3,20 @@
   // Academic work organized by category
   const technicalReports = [
     {
+      id: 'sae-feature-stability',
+      title: 'At Standard Training Budgets, SAE Features Match Random Baseline: Evidence for Underconstrained Sparse Reconstruction',
+      authors: ['Bright Liu'],
+      date: '2026',
+      type: 'Research Paper',
+      category: 'Mechanistic Interpretability',
+      abstract: 'Multi-seed stability analysis showing trained SAE features are practically indistinguishable from randomly initialized SAEs at standard training budgets, with evidence that the sparse reconstruction objective is underconstrained.',
+      keywords: ['Sparse Autoencoders', 'Mechanistic Interpretability', 'Feature Stability', 'Reproducibility'],
+      file: 'SAE_Feature_Stability.pdf',
+      size: '146 KB',
+      pages: '15 pages',
+      featured: true
+    },
+    {
       id: 'latent-diffusion-models',
       title: 'Latent Diffusion Models for High-Resolution Image Generation',
       authors: ['Bright Liu'],
