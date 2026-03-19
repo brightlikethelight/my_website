@@ -34,7 +34,7 @@
 
   <div class="item">
     <div class="item-header">
-      <div class="item-title">Harvard University, Prof. Martin Nowak</div>
+      <div class="item-title">Harvard University</div>
       <div class="item-location">Cambridge, MA</div>
     </div>
     <div class="item-header">
